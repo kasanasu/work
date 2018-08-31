@@ -1,0 +1,31 @@
+#20180828_Tue～
+
+#これでコメント
+"""defがJSでいうfunctionにあたる"""
+def test01():
+	asano = "むぎ"
+	return asano
+#コンソールに「むぎ」と出る
+#print(test01())
+
+def test02(a, b):
+	return a+b, a*b
+
+def test03():
+	aa, bb = test02(5,10)
+	print(aa, bb)
+
+#15 50となる
+#test03()
+
+#Javaだけど引数のStringにnull入れた時に"null"が入ってるのすごいよね
+
+def showFruits():
+    fruits = { "Apple":"りんご", "Banana":"バナナ" }
+    for fruit1,fruit2 in fruits.items():
+        print(fruit1 + "は" + fruit2)
+#Appleはりんご
+#Bananaはバナナとなる
+#showFruits()
+#辞書型の変数に.items()したらキーも取得できる
+#.items()なしでやったら怒られた
