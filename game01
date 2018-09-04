@@ -14,19 +14,26 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 # タイトルバーの文字列をセット
 pygame.display.set_caption("Hello, world!")
 
+# イメージを用意
+backImg = pygame.image.load("moriyama.jpg").convert()        # 背景
+pythonImg = pygame.image.load("python.png").convert_alpha()
+
 # フォントの作成
-sysfont = pygame.font.SysFont(None, 80)
-sysfont.set_underline(True)　# アンダーライン
-hello1 = sysfont.render("Hello, world!", False, (0,0,0))
-hello2 = sysfont.render("Hello, world!", True, (0,0,0))
-hello3 = sysfont.render("Hello, world!", True, (255,0,0), (255,255,0))
+#sysfont = pygame.font.SysFont(None, 80)
+#sysfont.set_underline(True)
+#hello1 = sysfont.render("Hello, world!", False, (0,0,0))
+#hello2 = sysfont.render("Hello, world!", True, (0,0,0))
+#hello3 = sysfont.render("Hello, world!", True, (255,0,0), (255,255,0))
 
 # ゲームループ
 while True:
-    screen.fill((0,0,255))   # 画面を青色で塗りつぶす
-    screen.blit(hello1, (20,50))
-    screen.blit(hello2, (20,150))
-    screen.blit(hello3, (20,250))
+    #screen.fill((0,0,255))   # 画面を青色で塗りつぶす
+    #screen.blit(hello1, (20,50))
+    #screen.blit(hello2, (20,150))
+    #screen.blit(hello3, (20,250))
+
+    screen.blit(backImg, (0,0))        # 背景を描画
+    screen.blit(pythonImg, (320,400))  # 第二引数には座標を指定
 
     pygame.display.update()  # 画面を更新
     # イベント処理
