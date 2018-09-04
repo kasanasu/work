@@ -25,6 +25,8 @@ pythonImg = pygame.image.load("python.png").convert_alpha()
 #hello2 = sysfont.render("Hello, world!", True, (0,0,0))
 #hello3 = sysfont.render("Hello, world!", True, (255,0,0), (255,255,0))
 
+pythons_pos = []   # コピーした蛇の位置リスト
+
 # ゲームループ
 while True:
     #screen.fill((0,0,255))   # 画面を青色で塗りつぶす
@@ -33,10 +35,27 @@ while True:
     #screen.blit(hello3, (20,250))
 
     screen.blit(backImg, (0,0))        # 背景を描画
-    screen.blit(pythonImg, (320,400))  # 第二引数には座標を指定
-
-    pygame.display.update()  # 画面を更新
+    
     # イベント処理
     for event in pygame.event.get():
         if event.type == QUIT:  # 終了イベント
             sys.exit()
+        # マウスクリックで蛇をコピー
+        if event.type == MOUSEBUTTONDOWN and event.button == 1:
+            x, y = event.pos
+            x -= pythonImg.get_width() / 2
+            y -= pythonImg.get_height() / 2
+            pythons_pos.append((x,y))  # 蛇の位置を追加
+        # マウス移動で蛇を移動
+        if event.type == MOUSEMOTION:
+            x, y = event.pos
+            x -= pythonImg.get_width() / 2
+            y -= pythonImg.get_height() / 2
+            cur_pos = (x,y)
+
+    # 蛇を表示
+    screen.blit(pythonImg, (0,0))
+    for i, j in pythons_pos:
+        screen.blit(pythonImg, (i,j))
+    
+    pygame.display.update()
