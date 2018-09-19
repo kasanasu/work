@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.UI;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+
+namespace SearchRestaurant
+{
+    // テキストボックスから取得した値でAPIに問い合わせてGridViewにバインドするコード
+    public partial class Restaurant : Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            Console.WriteLine("hi");
+        }
+
+        // 検索ボタンクリック処理
+        public void SearchButtonClicked(object sender, EventArgs e)
+        {
+
+            string baseUrl = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/";
+            //hotpepperから取得したkey
+            string key = "8ab79079335b95c1";
+
+            string url = $"{baseUrl}?key={key}&format=json&keyword={restaurantName.Text}";
+            string json = new HttpClient().GetStringAsync(url).Result;
+            JObject jobj = JObject.Parse(json);
+            List<Product> procucts = new List<Product>();
+            for (int i = 0; i < jobj["results"]["shop"].Count(); i++)
+            {
+                procucts.Add(new Product((i+1), (string)((jobj["results"]["shop"][i]["name"] as JValue).Value)));
+            }
+            GridView1.DataSource = procucts;
+            GridView1.DataBind();
+        }
+
+
+        // 入力フォーマットチェック:未使用
+        private bool FormatCheck(string value)
+        {
+            bool ret = true;
+
+            return ret;
+        }
+    }
+}
