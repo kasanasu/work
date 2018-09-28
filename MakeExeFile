@@ -1,0 +1,36 @@
+//東京都の天気をAPIに問い合わせ、表示するbat
+//.bat  Containts of bat files.
+@echo off
+cd /d %~dp0
+call makeExeFile.exe
+timeout 60
+
+//.cs
+//ビルドしたらできるexeその他をbatファイルと同じ階層に入れる
+using System;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using System.Globalization;
+
+namespace makeExeFile
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string baseUrl = "http://weather.livedoor.com/forecast/webservice/json/v1";
+            //東京都のID
+            string cityname = "130010";
+
+            string url = $"{baseUrl}?city={cityname}";
+            string json = new HttpClient().GetStringAsync(url).Result;
+            JObject jobj = JObject.Parse(json);
+
+            string todayWeather = (string)((jobj["forecasts"][0]["telop"] as JValue).Value);
+            DateTime dt = DateTime.Now;
+            CultureInfo info = new CultureInfo("ja-JP");
+            Console.WriteLine(DateTime.Now.ToString("yyyy年MM月dd日") + dt.ToString("dddd", info));
+            Console.WriteLine("東京都：" + todayWeather);
+        }
+    }
+}
